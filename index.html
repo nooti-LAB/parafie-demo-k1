@@ -3,104 +3,1836 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Parafia św. Jana — demo</title>
+<title>Parafia św. Jana Apostoła — Demo</title>
+<meta name="description" content="Demo strony parafialnej — szablon prezentacyjny. Nie jest stroną prawdziwej parafii."/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root { --bg:#f7f4ef; --ink:#1a1a1a; --accent:#2c4a3e; --card:#fff; --muted:#5c5c5c; }
-* { box-sizing:border-box; }
-body { margin:0; font-family: Georgia, "Times New Roman", serif; background:var(--bg); color:var(--ink); line-height:1.5; }
-header { background:var(--accent); color:#fff; padding:1.25rem 1rem; }
-header h1 { margin:0 0 .25rem; font-size:1.4rem; font-weight:600; }
-header p { margin:0; opacity:.9; font-size:.95rem; }
-nav { display:flex; flex-wrap:wrap; gap:.35rem; padding:.75rem 1rem; background:#243f35; }
-nav a { color:#e8efe9; text-decoration:none; font-size:.8rem; font-family:system-ui,sans-serif; padding:.35rem .55rem; border:1px solid rgba(255,255,255,.25); border-radius:4px; }
-main { max-width:720px; margin:0 auto; padding:1rem; }
-section { background:var(--card); border-radius:8px; padding:1rem 1.1rem; margin:0 0 1rem; box-shadow:0 1px 3px rgba(0,0,0,.06); }
-section h2 { margin:0 0 .75rem; font-size:1.15rem; color:var(--accent); border-bottom:2px solid #d4cfc4; padding-bottom:.35rem; }
-.muted { color:var(--muted); font-size:.9rem; }
-ul { padding-left:1.2rem; }
-.card-row { display:grid; gap:.75rem; }
-@media(min-width:560px){ .card-row { grid-template-columns:1fr 1fr 1fr; } }
-.card { background:var(--bg); padding:.75rem; border-radius:6px; }
-table { width:100%; border-collapse:collapse; font-size:.9rem; }
-td, th { border-bottom:1px solid #e5e0d6; padding:.4rem .25rem; text-align:left; }
-.cta { background:#eef3f0; border:1px dashed var(--accent); padding:.75rem; border-radius:6px; margin-top:.75rem; font-family:system-ui,sans-serif; font-size:.9rem; }
-footer { text-align:center; padding:1.5rem 1rem 2.5rem; font-family:system-ui,sans-serif; font-size:.8rem; color:var(--muted); }
-.badge { display:inline-block; background:#c45c26; color:#fff; font-family:system-ui,sans-serif; font-size:.7rem; padding:.2rem .45rem; border-radius:3px; margin-left:.35rem; vertical-align:middle; }
+:root {
+  --forest: #1e3a2f;
+  --forest-dark: #162b23;
+  --forest-light: #2a4f40;
+  --gold: #c9a962;
+  --gold-light: #e8d9a8;
+  --gold-pale: #f5efd9;
+  --cream: #faf8f3;
+  --cream-dark: #f0ebe0;
+  --ink: #1c2420;
+  --ink-soft: #3d4a44;
+  --muted: #6b7770;
+  --border: #d8d4ca;
+  --white: #ffffff;
+  --error: #b8433d;
+  --shadow-sm: 0 1px 3px rgba(30,58,47,0.06), 0 1px 2px rgba(30,58,47,0.04);
+  --shadow-md: 0 4px 12px rgba(30,58,47,0.08), 0 2px 4px rgba(30,58,47,0.04);
+  --shadow-lg: 0 12px 40px rgba(30,58,47,0.12), 0 4px 12px rgba(30,58,47,0.06);
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --font-serif: 'Crimson Pro', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --transition: 0.2s ease;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: var(--ink);
+  background: var(--cream);
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+
+a { color: var(--forest); transition: color var(--transition); }
+a:hover { color: var(--gold); }
+a:focus { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+h1, h2, h3, h4 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--forest);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: linear-gradient(135deg, #d4652b 0%, #b8433d 100%);
+  color: var(--white);
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.65rem;
+  border-radius: 4px;
+  vertical-align: middle;
+  box-shadow: 0 2px 4px rgba(180,67,61,0.25);
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .container { padding: 0 2rem; }
+}
+
+/* ============================================
+   NAVIGATION
+   ============================================ */
+.nav-wrapper {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--forest);
+  box-shadow: var(--shadow-md);
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.25rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--white);
+  text-decoration: none;
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.125rem;
+}
+
+.nav-brand:hover { color: var(--gold-light); }
+
+.nav-brand svg {
+  width: 32px;
+  height: 32px;
+  fill: var(--gold);
+}
+
+.nav-toggle {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  z-index: 110;
+}
+
+.nav-toggle span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--white);
+  border-radius: 2px;
+  transition: var(--transition);
+}
+
+.nav-toggle:focus {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.nav-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--forest-dark);
+  padding: 1rem;
+  box-shadow: var(--shadow-lg);
+}
+
+.nav-menu.active { display: block; }
+
+.nav-menu a {
+  display: block;
+  color: rgba(255,255,255,0.9);
+  text-decoration: none;
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+}
+
+.nav-menu a:hover,
+.nav-menu a:focus {
+  background: var(--forest-light);
+  color: var(--gold-light);
+}
+
+@media (min-width: 900px) {
+  .nav-toggle { display: none; }
+  
+  .nav-menu {
+    display: flex !important;
+    position: static;
+    background: transparent;
+    padding: 0;
+    box-shadow: none;
+    gap: 0.25rem;
+  }
+  
+  .nav-menu a {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+  }
+}
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
+.hero {
+  position: relative;
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(165deg, var(--forest) 0%, var(--forest-dark) 100%);
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('https://images.unsplash.com/photo-1548625149-fc4a29cf7092?w=1920&q=80') center/cover no-repeat;
+  opacity: 0.15;
+  mix-blend-mode: overlay;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: linear-gradient(to top, var(--cream), transparent);
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding: 4rem 1.25rem;
+  text-align: center;
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+}
+
+.hero h1 {
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-weight: 700;
+  color: var(--white);
+  margin: 0 0 0.75rem;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.2);
+}
+
+.hero-subtitle {
+  font-size: clamp(1.125rem, 3vw, 1.5rem);
+  font-weight: 400;
+  color: var(--gold-light);
+  margin: 0 0 2rem;
+  font-style: italic;
+}
+
+.hero-schedule {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.hero-schedule-item {
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.5rem;
+  text-align: center;
+  min-width: 140px;
+}
+
+.hero-schedule-item strong {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.35rem;
+}
+
+.hero-schedule-item span {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--white);
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--gold);
+  color: var(--forest-dark);
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  box-shadow: 0 4px 20px rgba(201,169,98,0.35);
+  transition: var(--transition);
+}
+
+.hero-cta:hover {
+  background: var(--gold-light);
+  color: var(--forest-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(201,169,98,0.45);
+}
+
+.hero-cta svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ============================================
+   SECTION STYLES
+   ============================================ */
+.section {
+  padding: 4rem 0;
+}
+
+.section-alt {
+  background: var(--white);
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section-number {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+
+.section-title {
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  margin: 0 0 0.75rem;
+}
+
+.section-subtitle {
+  font-size: 1.0625rem;
+  color: var(--muted);
+  margin: 0;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ============================================
+   CARDS
+   ============================================ */
+.card {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+  transition: var(--transition);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.card-grid {
+  display: grid;
+  gap: 1.25rem;
+}
+
+@media (min-width: 600px) {
+  .card-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 900px) {
+  .card-grid-3 { grid-template-columns: repeat(3, 1fr); }
+}
+
+.card-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--forest) 0%, var(--forest-light) 100%);
+  border-radius: var(--radius-sm);
+  margin-bottom: 1rem;
+}
+
+.card-icon svg {
+  width: 24px;
+  height: 24px;
+  fill: var(--gold);
+}
+
+.card h3 {
+  font-size: 1.1875rem;
+  margin: 0 0 0.5rem;
+}
+
+.card p {
+  color: var(--ink-soft);
+  margin: 0;
+  font-size: 0.9375rem;
+}
+
+/* ============================================
+   ANNOUNCEMENTS (Ogłoszenia)
+   ============================================ */
+.announcement-card {
+  background: linear-gradient(135deg, var(--forest) 0%, var(--forest-dark) 100%);
+  color: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.announcement-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, var(--gold) 0%, transparent 70%);
+  opacity: 0.1;
+}
+
+.announcement-date {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1rem;
+}
+
+.announcement-date svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+.announcement-card h3 {
+  color: var(--white);
+  font-size: 1.375rem;
+  margin: 0 0 1rem;
+}
+
+.announcement-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.announcement-list li {
+  padding: 0.75rem 0;
+  padding-left: 1.75rem;
+  position: relative;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.9);
+}
+
+.announcement-list li:last-child { border-bottom: none; }
+
+.announcement-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 1.1rem;
+  width: 8px;
+  height: 8px;
+  background: var(--gold);
+  border-radius: 50%;
+}
+
+/* ============================================
+   INTENTIONS TABLE (Intencje)
+   ============================================ */
+.table-wrapper {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+}
+
+.intentions-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+
+.intentions-table thead {
+  background: var(--forest);
+  color: var(--white);
+}
+
+.intentions-table th {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  text-align: left;
+  padding: 1rem;
+}
+
+.intentions-table td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.intentions-table tbody tr:last-child td { border-bottom: none; }
+
+.intentions-table tbody tr:hover { background: var(--cream); }
+
+.day-badge {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.75rem;
+  background: var(--cream-dark);
+  color: var(--forest);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.time-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: var(--forest);
+}
+
+.time-badge svg {
+  width: 14px;
+  height: 14px;
+  fill: var(--gold);
+}
+
+.intention-text {
+  color: var(--ink-soft);
+}
+
+.intention-text strong {
+  color: var(--ink);
+}
+
+/* ============================================
+   SACRAMENTS (Sakramenty)
+   ============================================ */
+.sacrament-card {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+}
+
+.sacrament-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.sacrament-image {
+  height: 140px;
+  background: linear-gradient(135deg, var(--forest) 0%, var(--forest-light) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.sacrament-image::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('https://images.unsplash.com/photo-1438232992991-995b7058bbb3?w=800&q=70') center/cover no-repeat;
+  opacity: 0.2;
+}
+
+.sacrament-image svg {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  fill: var(--gold);
+}
+
+.sacrament-content {
+  padding: 1.5rem;
+}
+
+.sacrament-content h3 {
+  font-size: 1.25rem;
+  margin: 0 0 0.75rem;
+}
+
+.sacrament-content p {
+  color: var(--ink-soft);
+  margin: 0 0 1rem;
+  font-size: 0.9375rem;
+}
+
+.sacrament-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--forest);
+  text-decoration: none;
+}
+
+.sacrament-link:hover { color: var(--gold); }
+
+.sacrament-link svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+  transition: transform var(--transition);
+}
+
+.sacrament-link:hover svg { transform: translateX(3px); }
+
+/* ============================================
+   SERVICES SCHEDULE (Nabożeństwa)
+   ============================================ */
+.schedule-grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .schedule-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.schedule-card {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  padding: 1.75rem;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+.schedule-card h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.125rem;
+  margin: 0 0 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--cream-dark);
+}
+
+.schedule-card h3 svg {
+  width: 24px;
+  height: 24px;
+  fill: var(--gold);
+}
+
+.schedule-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.schedule-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0.6rem 0;
+  border-bottom: 1px dashed var(--border);
+  font-size: 0.9375rem;
+}
+
+.schedule-list li:last-child { border-bottom: none; }
+
+.schedule-list .label { color: var(--ink-soft); }
+
+.schedule-list .time {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  color: var(--forest);
+}
+
+/* ============================================
+   ABOUT (O parafii)
+   ============================================ */
+.about-wrapper {
+  display: grid;
+  gap: 2rem;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .about-wrapper { grid-template-columns: 1fr 1.2fr; }
+}
+
+.about-image {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+
+.about-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  min-height: 280px;
+}
+
+.about-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, var(--forest) 0%, transparent 50%);
+  opacity: 0.4;
+}
+
+.about-content h2 {
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  margin: 0 0 1rem;
+}
+
+.about-content .lead {
+  font-size: 1.125rem;
+  color: var(--ink-soft);
+  margin: 0 0 1.5rem;
+  font-style: italic;
+}
+
+.about-features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.about-features li {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.6rem 0;
+}
+
+.about-features svg {
+  width: 20px;
+  height: 20px;
+  fill: var(--gold);
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+.about-features span { color: var(--ink-soft); }
+
+.pastor-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--cream-dark);
+  padding: 1rem;
+  border-radius: var(--radius-sm);
+  margin-top: 1.5rem;
+}
+
+.pastor-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--forest);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pastor-avatar svg {
+  width: 28px;
+  height: 28px;
+  fill: var(--gold);
+}
+
+.pastor-info strong {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.pastor-info span {
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+/* ============================================
+   COMMUNITIES (Wspólnoty)
+   ============================================ */
+.community-card {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  transition: var(--transition);
+}
+
+.community-card:hover {
+  border-color: var(--gold);
+  box-shadow: var(--shadow-md);
+}
+
+.community-icon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gold-pale);
+  border-radius: var(--radius-sm);
+  margin-bottom: 1rem;
+}
+
+.community-icon svg {
+  width: 22px;
+  height: 22px;
+  fill: var(--forest);
+}
+
+.community-card h3 {
+  font-size: 1.125rem;
+  margin: 0 0 0.5rem;
+}
+
+.community-card p {
+  color: var(--ink-soft);
+  margin: 0 0 1rem;
+  font-size: 0.9375rem;
+  flex-grow: 1;
+}
+
+.community-time {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--gold);
+  background: var(--cream);
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-sm);
+  width: fit-content;
+}
+
+.community-time svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+
+/* ============================================
+   CONTACT (Kontakt)
+   ============================================ */
+.contact-grid {
+  display: grid;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .contact-grid { grid-template-columns: 1fr 1fr; }
+}
+
+.contact-info {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  padding: 2rem;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+.contact-info h3 {
+  font-size: 1.25rem;
+  margin: 0 0 1.5rem;
+}
+
+.contact-item {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.contact-item:last-child { border-bottom: none; }
+
+.contact-item svg {
+  width: 20px;
+  height: 20px;
+  fill: var(--gold);
+  flex-shrink: 0;
+  margin-top: 0.2rem;
+}
+
+.contact-item strong {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.25rem;
+}
+
+.contact-item span {
+  color: var(--ink);
+}
+
+.cta-card {
+  background: linear-gradient(135deg, var(--forest) 0%, var(--forest-dark) 100%);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem 2rem;
+  text-align: center;
+  color: var(--white);
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-card::before {
+  content: '';
+  position: absolute;
+  top: -100px;
+  right: -100px;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, var(--gold) 0%, transparent 60%);
+  opacity: 0.15;
+}
+
+.cta-card h3 {
+  color: var(--white);
+  font-size: 1.5rem;
+  margin: 0 0 0.5rem;
+  position: relative;
+}
+
+.cta-card .price {
+  font-family: var(--font-sans);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin: 0.5rem 0;
+  position: relative;
+}
+
+.cta-card .price-note {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  color: rgba(255,255,255,0.7);
+  margin: 0 0 1.5rem;
+  position: relative;
+}
+
+.cta-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem;
+  text-align: left;
+  max-width: 280px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+}
+
+.cta-features li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  font-size: 0.9375rem;
+  color: rgba(255,255,255,0.9);
+}
+
+.cta-features svg {
+  width: 18px;
+  height: 18px;
+  fill: var(--gold);
+  flex-shrink: 0;
+}
+
+.cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--gold);
+  color: var(--forest-dark);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  box-shadow: 0 4px 20px rgba(201,169,98,0.35);
+  transition: var(--transition);
+  position: relative;
+}
+
+.cta-button:hover {
+  background: var(--gold-light);
+  color: var(--forest-dark);
+  transform: translateY(-2px);
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.footer {
+  background: var(--forest-dark);
+  color: rgba(255,255,255,0.8);
+  padding: 3rem 0 2rem;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .footer-content {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+}
+
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .footer-brand { align-items: flex-start; }
+}
+
+.footer-brand svg {
+  width: 40px;
+  height: 40px;
+  fill: var(--gold);
+}
+
+.footer-brand span {
+  font-family: var(--font-serif);
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--white);
+}
+
+.footer-disclaimer {
+  background: rgba(255,255,255,0.05);
+  border: 1px dashed rgba(255,255,255,0.2);
+  border-radius: var(--radius-sm);
+  padding: 1rem 1.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  max-width: 400px;
+}
+
+.footer-disclaimer strong {
+  color: var(--gold);
+}
+
+.footer-cta {
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .footer-cta { text-align: right; }
+}
+
+.footer-cta .price {
+  font-family: var(--font-sans);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.footer-cta .label {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.6);
+  display: block;
+  margin-top: 0.25rem;
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.1);
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  text-align: center;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.5);
+}
+
+/* ============================================
+   UTILITIES
+   ============================================ */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.text-center { text-align: center; }
+.mt-2 { margin-top: 2rem; }
+.mb-2 { margin-bottom: 2rem; }
 </style>
 </head>
 <body>
-<header>
-  <h1>Parafia św. Jana <span class="badge">DEMO</span></h1>
-  <p>Ogłoszenia · Msze · Kontakt — także na telefonie</p>
-</header>
-<nav>
-  <a href="#home">Główna</a>
-  <a href="#ogloszenia">Ogłoszenia</a>
-  <a href="#intencje">Intencje</a>
-  <a href="#sakramenty">Sakramenty</a>
-  <a href="#nabozenstwa">Nabożeństwa</a>
-  <a href="#o-parafii">O parafii</a>
-  <a href="#wspolnoty">Wspólnoty</a>
-  <a href="#kontakt">Kontakt</a>
+
+<!-- Navigation -->
+<nav class="nav-wrapper" role="navigation" aria-label="Główna nawigacja">
+  <div class="nav-container">
+    <a href="#home" class="nav-brand">
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <path d="M16 2L4 10v12l12 8 12-8V10L16 2zm0 4l8 5.33v9.34L16 26l-8-5.33v-9.34L16 6z"/>
+        <path d="M16 10v12M10 16h12"/>
+      </svg>
+      <span>Parafia św. Jana</span>
+      <span class="badge">DEMO</span>
+    </a>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-menu" id="navMenu">
+      <a href="#home">Główna</a>
+      <a href="#ogloszenia">Ogłoszenia</a>
+      <a href="#intencje">Intencje</a>
+      <a href="#sakramenty">Sakramenty</a>
+      <a href="#nabozenstwa">Nabożeństwa</a>
+      <a href="#o-parafii">O parafii</a>
+      <a href="#wspolnoty">Wspólnoty</a>
+      <a href="#kontakt">Kontakt</a>
+    </div>
+  </div>
 </nav>
-<main>
-<section id="home">
-  <h2>1. Strona główna</h2>
-  <p><strong>Witamy w Parafii św. Jana</strong></p>
-  <p class="muted">Najbliższe Msze w niedzielę: 8:00 · 10:30 · 18:00</p>
-  <ul>
-    <li>Rekolekcje — zapisy w kancelarii</li>
-    <li>Dyżur spowiedzi: piątek 16:00–18:00</li>
-    <li>Zbiórka żywności w niedzielę po Mszach</li>
-  </ul>
-</section>
-<section id="ogloszenia">
-  <h2>2. Ogłoszenia parafialne</h2>
-  <p><strong>Ogłoszenia z dnia 05.10.2026</strong></p>
-  <p class="muted">Dziękczynienie za dożynki. Spotkanie Rady Duszpasterskiej we wtorek o 19:00. Zachęcamy do modlitwy różańcowej w październiku.</p>
-</section>
-<section id="intencje">
-  <h2>3. Intencje mszalne</h2>
-  <table>
-    <tr><th>Dzień</th><th>Godz.</th><th>Intencja</th></tr>
-    <tr><td>Poniedziałek</td><td>7:00</td><td>Za śp. Annę K.</td></tr>
-    <tr><td>Wtorek</td><td>18:00</td><td>Dziękczynna — rodzina Nowaków</td></tr>
-    <tr><td>Środa</td><td>7:00</td><td>O zdrowie dla Jana</td></tr>
-  </table>
-  <div class="cta">Zgłoś intencję: tel. kancelarii (w demie — placeholder formularza).</div>
-</section>
-<section id="sakramenty">
-  <h2>4. Sakramenty</h2>
-  <p><strong>Chrzest</strong> — po uzgodnieniu z kancelarią; kurs dla rodziców i chrzestnych.</p>
-  <p><strong>Ślub</strong> — zgłoszenie min. 3 miesiące wcześniej.</p>
-  <p><strong>Pogrzeb</strong> — kontakt z kancelarią / dyżurującym księdzem.</p>
-</section>
-<section id="nabozenstwa">
-  <h2>5. Nabożeństwa / godziny</h2>
-  <p><strong>Msze św.</strong> Pn–Sob 7:00 i 18:00 · Nd 8:00, 10:30, 18:00</p>
-  <p><strong>Spowiedź</strong> 15 min przed Mszą oraz piątek 16:00–18:00</p>
-  <p class="muted">Różaniec: październik, pn–pt 17:30</p>
-</section>
-<section id="o-parafii">
-  <h2>6. O parafii</h2>
-  <p>Parafia św. Jana istnieje od 1924 (dane przykładowe). Kościół parafialny jest miejscem wspólnej modlitwy i spotkań wspólnot.</p>
-  <p class="muted">Proboszcz: ks. Jan Kowalski (demo)</p>
-</section>
-<section id="wspolnoty">
-  <h2>7. Wspólnoty / grupy</h2>
-  <div class="card-row">
-    <div class="card"><strong>Żywy Różaniec</strong><br/><span class="muted">I wtorek miesiąca</span></div>
-    <div class="card"><strong>Oaza</strong><br/><span class="muted">Piątek 19:00</span></div>
-    <div class="card"><strong>Schola</strong><br/><span class="muted">Czwartek 18:30</span></div>
+
+<!-- Hero Section -->
+<section id="home" class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M12 2L4 7v10l8 5 8-5V7l-8-5zm0 2.5l5.5 3.44v6.12L12 17.5l-5.5-3.44V7.94L12 4.5z"/>
+      </svg>
+      Witamy w parafii
+    </div>
+    <h1>Parafia św. Jana Apostoła</h1>
+    <p class="hero-subtitle">„Miłujcie się wzajemnie, jak Ja was umiłowałem"</p>
+    
+    <div class="hero-schedule">
+      <div class="hero-schedule-item">
+        <strong>Niedziela</strong>
+        <span>8:00 · 10:30 · 18:00</span>
+      </div>
+      <div class="hero-schedule-item">
+        <strong>Dni powszednie</strong>
+        <span>7:00 · 18:00</span>
+      </div>
+      <div class="hero-schedule-item">
+        <strong>Spowiedź</strong>
+        <span>15 min przed Mszą</span>
+      </div>
+    </div>
+    
+    <a href="#kontakt" class="hero-cta">
+      Skontaktuj się z nami
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z"/>
+      </svg>
+    </a>
   </div>
 </section>
-<section id="kontakt">
-  <h2>8. Kontakt / kancelaria</h2>
-  <p>ul. Przykładowa 1, 00-000 Miasto<br/>tel. +48 000 000 000<br/>kancelaria@parafiaswjana-demo.pl</p>
-  <p class="muted">Dyżur: wt–pt 9:00–12:00 i 16:00–17:30</p>
-  <div class="cta"><strong>Oferta wdrożenia (Faza 0): 1990 zł netto</strong> — Wasze treści, mobile, hosting po stronie parafii. Opieka / WCAG = wariant premium osobno.</div>
+
+<!-- Ogłoszenia -->
+<section id="ogloszenia" class="section">
+  <div class="container">
+    <header class="section-header">
+      <span class="section-number">02 / Aktualności</span>
+      <h2 class="section-title">Ogłoszenia parafialne</h2>
+      <p class="section-subtitle">Najważniejsze informacje z życia naszej wspólnoty</p>
+    </header>
+    
+    <div class="announcement-card">
+      <div class="announcement-date">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"/>
+        </svg>
+        5 października 2026 r.
+      </div>
+      <h3>Ogłoszenia na XXVII Niedzielę Zwykłą</h3>
+      <ul class="announcement-list">
+        <li><strong>Dziękczynienie za dożynki.</strong> Dziękujemy wszystkim, którzy włączyli się w przygotowanie tegorocznej uroczystości dożynkowej.</li>
+        <li><strong>Spotkanie Rady Duszpasterskiej</strong> odbędzie się we wtorek o godzinie 19:00 w salce parafialnej.</li>
+        <li><strong>Październik — miesiąc różańcowy.</strong> Zachęcamy do wspólnej modlitwy różańcowej codziennie o 17:30.</li>
+        <li><strong>Rekolekcje adwentowe</strong> — zapisy w kancelarii parafialnej do końca listopada.</li>
+        <li><strong>Zbiórka żywności</strong> dla potrzebujących po wszystkich Mszach świętych w najbliższą niedzielę.</li>
+      </ul>
+    </div>
+  </div>
 </section>
-</main>
-<footer>Demo szablonu strony parafii · nie jest stroną prawdziwej parafii · CTA 1990 zł netto</footer>
+
+<!-- Intencje mszalne -->
+<section id="intencje" class="section section-alt">
+  <div class="container">
+    <header class="section-header">
+      <span class="section-number">03 / Modlitwa</span>
+      <h2 class="section-title">Intencje mszalne</h2>
+      <p class="section-subtitle">Bieżący tydzień — zapraszamy do wspólnej modlitwy</p>
+    </header>
+    
+    <div class="table-wrapper">
+      <table class="intentions-table">
+        <thead>
+          <tr>
+            <th scope="col">Dzień</th>
+            <th scope="col">Godzina</th>
+            <th scope="col">Intencja</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="day-badge">Poniedziałek</span></td>
+            <td>
+              <span class="time-badge">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.2 3.2.8-1.3-4.5-2.7V7z"/></svg>
+                7:00
+              </span>
+            </td>
+            <td class="intention-text">Za <strong>śp. Annę Kowalską</strong> w 10. rocznicę śmierci — od rodziny</td>
+          </tr>
+          <tr>
+            <td><span class="day-badge">Wtorek</span></td>
+            <td>
+              <span class="time-badge">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.2 3.2.8-1.3-4.5-2.7V7z"/></svg>
+                18:00
+              </span>
+            </td>
+            <td class="intention-text"><strong>Dziękczynna</strong> za 25 lat małżeństwa — rodzina Nowaków</td>
+          </tr>
+          <tr>
+            <td><span class="day-badge">Środa</span></td>
+            <td>
+              <span class="time-badge">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.2 3.2.8-1.3-4.5-2.7V7z"/></svg>
+                7:00
+              </span>
+            </td>
+            <td class="intention-text"><strong>O zdrowie</strong> dla Jana w intencji rychłego powrotu do zdrowia</td>
+          </tr>
+          <tr>
+            <td><span class="day-badge">Czwartek</span></td>
+            <td>
+              <span class="time-badge">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.2 3.2.8-1.3-4.5-2.7V7z"/></svg>
+                18:00
+              </span>
+            </td>
+            <td class="intention-text">Za <strong>śp. Marię i Józefa</strong> — od wnuków</td>
+          </tr>
+          <tr>
+            <td><span class="day-badge">Piątek</span></td>
+            <td>
+              <span class="time-badge">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.2 3.2.8-1.3-4.5-2.7V7z"/></svg>
+                7:00
+              </span>
+            </td>
+            <td class="intention-text"><strong>W intencji</strong> młodzieży przygotowującej się do bierzmowania</td>
+          </tr>
+          <tr>
+            <td><span class="day-badge">Sobota</span></td>
+            <td>
+              <span class="time-badge">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.2 3.2.8-1.3-4.5-2.7V7z"/></svg>
+                18:00
+              </span>
+            </td>
+            <td class="intention-text"><strong>O Boże błogosławieństwo</strong> dla rodziny Wiśniewskich</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <p class="text-center mt-2" style="color: var(--muted); font-family: var(--font-sans); font-size: 0.875rem;">
+      Zgłoszenie intencji: kancelaria parafialna lub telefonicznie<br>
+      <em>(w wersji demo — formularz kontaktowy)</em>
+    </p>
+  </div>
+</section>
+
+<!-- Sakramenty -->
+<section id="sakramenty" class="section">
+  <div class="container">
+    <header class="section-header">
+      <span class="section-number">04 / Życie sakramentalne</span>
+      <h2 class="section-title">Sakramenty święte</h2>
+      <p class="section-subtitle">Informacje o przygotowaniu i udzielaniu sakramentów</p>
+    </header>
+    
+    <div class="card-grid card-grid-3">
+      <article class="sacrament-card">
+        <div class="sacrament-image">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+          </svg>
+        </div>
+        <div class="sacrament-content">
+          <h3>Chrzest święty</h3>
+          <p>Zgłoszenie w kancelarii min. 2 tygodnie przed planowaną datą. Wymagane: kurs dla rodziców i chrzestnych.</p>
+          <a href="#kontakt" class="sacrament-link">
+            Umów termin
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z"/></svg>
+          </a>
+        </div>
+      </article>
+      
+      <article class="sacrament-card">
+        <div class="sacrament-image">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M9 11.75c-.69 0-1.25.56-1.25 1.25s.56 1.25 1.25 1.25 1.25-.56 1.25-1.25-.56-1.25-1.25-1.25zm6 0c-.69 0-1.25.56-1.25 1.25s.56 1.25 1.25 1.25 1.25-.56 1.25-1.25-.56-1.25-1.25-1.25zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8 0-.29.02-.58.05-.86 2.36-1.05 4.23-2.98 5.21-5.37C11.07 8.33 14.05 10 17.42 10c.78 0 1.53-.09 2.25-.26.21.71.33 1.47.33 2.26 0 4.41-3.59 8-8 8z"/>
+          </svg>
+        </div>
+        <div class="sacrament-content">
+          <h3>Sakrament małżeństwa</h3>
+          <p>Zgłoszenie min. 3 miesiące przed ślubem. Wymagane: kurs przedmałżeński, dokumenty z USC, świadectwa.</p>
+          <a href="#kontakt" class="sacrament-link">
+            Więcej informacji
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z"/></svg>
+          </a>
+        </div>
+      </article>
+      
+      <article class="sacrament-card">
+        <div class="sacrament-image">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3zm0 12.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+          </svg>
+        </div>
+        <div class="sacrament-content">
+          <h3>Pogrzeb katolicki</h3>
+          <p>Kontakt z kancelarią lub dyżurującym księdzem niezwłocznie po zgonie. Pomożemy w organizacji uroczystości.</p>
+          <a href="#kontakt" class="sacrament-link">
+            Kontakt pilny
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z"/></svg>
+          </a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Nabożeństwa -->
+<section id="nabozenstwa" class="section section-alt">
+  <div class="container">
+    <header class="section-header">
+      <span class="section-number">05 / Rozkład</span>
+      <h2 class="section-title">Nabożeństwa i godziny</h2>
+      <p class="section-subtitle">Stały porządek Mszy świętych i nabożeństw</p>
+    </header>
+    
+    <div class="schedule-grid">
+      <div class="schedule-card">
+        <h3>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3zm0 4c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm4 10H8v-1c0-1.33 2.67-2 4-2s4 .67 4 2v1z"/>
+          </svg>
+          Msze święte
+        </h3>
+        <ul class="schedule-list">
+          <li>
+            <span class="label">Niedziela</span>
+            <span class="time">8:00 · 10:30 · 18:00</span>
+          </li>
+          <li>
+            <span class="label">Poniedziałek – Sobota</span>
+            <span class="time">7:00 · 18:00</span>
+          </li>
+          <li>
+            <span class="label">Święta</span>
+            <span class="time">jak w niedzielę</span>
+          </li>
+          <li>
+            <span class="label">I piątek miesiąca</span>
+            <span class="time">7:00 · 9:00 · 18:00</span>
+          </li>
+        </ul>
+      </div>
+      
+      <div class="schedule-card">
+        <h3>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
+          </svg>
+          Spowiedź święta
+        </h3>
+        <ul class="schedule-list">
+          <li>
+            <span class="label">Przed każdą Mszą</span>
+            <span class="time">15 minut wcześniej</span>
+          </li>
+          <li>
+            <span class="label">Piątek</span>
+            <span class="time">16:00 – 18:00</span>
+          </li>
+          <li>
+            <span class="label">I piątek miesiąca</span>
+            <span class="time">od 15:00</span>
+          </li>
+          <li>
+            <span class="label">Adwent / Wielki Post</span>
+            <span class="time">codziennie od 16:00</span>
+          </li>
+        </ul>
+      </div>
+      
+      <div class="schedule-card">
+        <h3>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"/>
+          </svg>
+          Kancelaria
+        </h3>
+        <ul class="schedule-list">
+          <li>
+            <span class="label">Wtorek – Piątek</span>
+            <span class="time">9:00 – 12:00</span>
+          </li>
+          <li>
+            <span class="label">Wtorek – Piątek</span>
+            <span class="time">16:00 – 17:30</span>
+          </li>
+          <li>
+            <span class="label">Sobota</span>
+            <span class="time">9:00 – 11:00</span>
+          </li>
+          <li>
+            <span class="label">Niedziela, poniedziałek</span>
+            <span class="time">nieczynna</span>
+          </li>
+        </ul>
+      </div>
+      
+      <div class="schedule-card">
+        <h3>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+          </svg>
+          Nabożeństwa okresowe
+        </h3>
+        <ul class="schedule-list">
+          <li>
+            <span class="label">Różaniec (październik)</span>
+            <span class="time">pn–pt 17:30</span>
+          </li>
+          <li>
+            <span class="label">Roraty (Adwent)</span>
+            <span class="time">pn–sob 6:30</span>
+          </li>
+          <li>
+            <span class="label">Droga Krzyżowa</span>
+            <span class="time">pt 17:15</span>
+          </li>
+          <li>
+            <span class="label">Gorzkie Żale</span>
+            <span class="time">nd 17:00</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- O parafii -->
+<section id="o-parafii" class="section">
+  <div class="container">
+    <div class="about-wrapper">
+      <div class="about-image">
+        <img 
+          src="https://images.unsplash.com/photo-1548625149-fc4a29cf7092?w=800&q=80" 
+          alt="Wnętrze zabytkowego kościoła z drewnianymi ławkami i witrażami — zdjęcie ilustracyjne"
+          loading="lazy"
+        >
+      </div>
+      <div class="about-content">
+        <span class="section-number">06 / Historia</span>
+        <h2>O naszej parafii</h2>
+        <p class="lead">Parafia św. Jana Apostoła służy wspólnocie wiernych od 1924 roku, będąc miejscem modlitwy, spotkań i wzajemnej pomocy.</p>
+        
+        <ul class="about-features">
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+            <span>Zabytkowy kościół neogotycki z 1927 roku</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+            <span>Aktywne wspólnoty i grupy parafialne</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+            <span>Katecheza dla dzieci, młodzieży i dorosłych</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+            <span>Pomoc charytatywna i działalność Caritas</span>
+          </li>
+        </ul>
+        
+        <div class="pastor-card">
+          <div class="pastor-avatar">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+            </svg>
+          </div>
+          <div class="pastor-info">
+            <strong>ks. Jan Kowalski</strong>
+            <span>Proboszcz (dane przykładowe)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Wspólnoty -->
+<section id="wspolnoty" class="section section-alt">
+  <div class="container">
+    <header class="section-header">
+      <span class="section-number">07 / Życie wspólnotowe</span>
+      <h2 class="section-title">Wspólnoty i grupy</h2>
+      <p class="section-subtitle">Dołącz do jednej z naszych wspólnot i rozwijaj swoją wiarę</p>
+    </header>
+    
+    <div class="card-grid card-grid-3">
+      <article class="community-card">
+        <div class="community-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+          </svg>
+        </div>
+        <h3>Żywy Różaniec</h3>
+        <p>Wspólna modlitwa różańcowa i formacja maryjna. Otwarta dla wszystkich parafian.</p>
+        <div class="community-time">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
+          I wtorek miesiąca, 18:30
+        </div>
+      </article>
+      
+      <article class="community-card">
+        <div class="community-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>
+          </svg>
+        </div>
+        <h3>Ruch Światło-Życie (Oaza)</h3>
+        <p>Formacja duchowa dla młodzieży oparta na metodzie ks. Blachnickiego. Rekolekcje letnie i zimowe.</p>
+        <div class="community-time">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
+          Piątek, 19:00
+        </div>
+      </article>
+      
+      <article class="community-card">
+        <div class="community-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+          </svg>
+        </div>
+        <h3>Schola młodzieżowa</h3>
+        <p>Śpiew liturgiczny i animacja muzyczna Mszy świętych. Zapraszamy osoby lubiące śpiewać.</p>
+        <div class="community-time">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
+          Czwartek, 18:30
+        </div>
+      </article>
+      
+      <article class="community-card">
+        <div class="community-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+          </svg>
+        </div>
+        <h3>Koło Przyjaciół Radia Maryja</h3>
+        <p>Wspólna modlitwa i spotkania formacyjne w duchu maryjnym.</p>
+        <div class="community-time">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
+          I sobota miesiąca, 9:00
+        </div>
+      </article>
+      
+      <article class="community-card">
+        <div class="community-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+          </svg>
+        </div>
+        <h3>Caritas parafialna</h3>
+        <p>Pomoc potrzebującym parafianom i osobom w trudnej sytuacji życiowej. Zbiórki, paczki, wsparcie.</p>
+        <div class="community-time">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
+          Środa, 10:00 (dyżur)
+        </div>
+      </article>
+      
+      <article class="community-card">
+        <div class="community-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+          </svg>
+        </div>
+        <h3>Ministranci i lektorzy</h3>
+        <p>Służba liturgiczna dla chłopców i młodych mężczyzn. Spotkania formacyjne i wyjazdy.</p>
+        <div class="community-time">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
+          Sobota, 10:00
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Kontakt -->
+<section id="kontakt" class="section">
+  <div class="container">
+    <header class="section-header">
+      <span class="section-number">08 / Kontakt</span>
+      <h2 class="section-title">Kancelaria parafialna</h2>
+      <p class="section-subtitle">Zapraszamy do kontaktu — służymy pomocą</p>
+    </header>
+    
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3>Dane kontaktowe</h3>
+        
+        <div class="contact-item">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+          </svg>
+          <div>
+            <strong>Adres</strong>
+            <span>ul. Przykładowa 1<br>00-000 Miasto</span>
+          </div>
+        </div>
+        
+        <div class="contact-item">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+          </svg>
+          <div>
+            <strong>Telefon</strong>
+            <span>+48 000 000 000<br><em style="font-size: 0.875rem; color: var(--muted);">(numer przykładowy)</em></span>
+          </div>
+        </div>
+        
+        <div class="contact-item">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+          </svg>
+          <div>
+            <strong>E-mail</strong>
+            <span>kancelaria@parafiaswjana-demo.pl<br><em style="font-size: 0.875rem; color: var(--muted);">(adres przykładowy)</em></span>
+          </div>
+        </div>
+        
+        <div class="contact-item">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/>
+          </svg>
+          <div>
+            <strong>Godziny otwarcia</strong>
+            <span>wt–pt: 9:00–12:00, 16:00–17:30<br>sob: 9:00–11:00</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="cta-card">
+        <h3>Oferta wdrożenia strony</h3>
+        <div class="price">1990 zł netto</div>
+        <div class="price-note">Faza 0 — pełna strona parafialna</div>
+        
+        <ul class="cta-features">
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+            Wasze treści — my je układamy
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+            Wersja mobilna (responsywna)
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+            Hosting po stronie parafii
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+            8 sekcji + ogłoszenia
+          </li>
+        </ul>
+        
+        <a href="mailto:kontakt@example.com" class="cta-button">
+          Zapytaj o szczegóły
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="18" height="18">
+            <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z"/>
+          </svg>
+        </a>
+        
+        <p style="font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-top: 1rem; position: relative;">
+          Opieka techniczna / WCAG = wariant premium (osobna wycena)
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <svg viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M16 2L4 10v12l12 8 12-8V10L16 2zm0 4l8 5.33v9.34L16 26l-8-5.33v-9.34L16 6z"/>
+          <path d="M16 10v12M10 16h12"/>
+        </svg>
+        <span>Parafia św. Jana <span class="badge" style="font-size: 0.6rem;">DEMO</span></span>
+      </div>
+      
+      <div class="footer-disclaimer">
+        <strong>Uwaga:</strong> To jest szablon demonstracyjny.<br>
+        <strong>Nie jest to strona prawdziwej parafii.</strong><br>
+        Wszystkie dane kontaktowe są przykładowe.
+      </div>
+      
+      <div class="footer-cta">
+        <div class="price">1990 zł netto</div>
+        <span class="label">Oferta Faza 0</span>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      Demo szablonu strony parafialnej · Wszystkie prawa zastrzeżone · 2026
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleMenu() {
+  const menu = document.getElementById('navMenu');
+  const toggle = document.querySelector('.nav-toggle');
+  const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+  
+  menu.classList.toggle('active');
+  toggle.setAttribute('aria-expanded', !isExpanded);
+}
+
+document.querySelectorAll('.nav-menu a').forEach(link => {
+  link.addEventListener('click', () => {
+    document.getElementById('navMenu').classList.remove('active');
+    document.querySelector('.nav-toggle').setAttribute('aria-expanded', 'false');
+  });
+});
+
+document.addEventListener('click', (e) => {
+  const nav = document.querySelector('.nav-wrapper');
+  const menu = document.getElementById('navMenu');
+  if (!nav.contains(e.target) && menu.classList.contains('active')) {
+    menu.classList.remove('active');
+    document.querySelector('.nav-toggle').setAttribute('aria-expanded', 'false');
+  }
+});
+</script>
+
 </body>
 </html>
