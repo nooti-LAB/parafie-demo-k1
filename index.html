@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Parafia św. Jana — demo</title>
+<style>
+:root { --bg:#f7f4ef; --ink:#1a1a1a; --accent:#2c4a3e; --card:#fff; --muted:#5c5c5c; }
+* { box-sizing:border-box; }
+body { margin:0; font-family: Georgia, "Times New Roman", serif; background:var(--bg); color:var(--ink); line-height:1.5; }
+header { background:var(--accent); color:#fff; padding:1.25rem 1rem; }
+header h1 { margin:0 0 .25rem; font-size:1.4rem; font-weight:600; }
+header p { margin:0; opacity:.9; font-size:.95rem; }
+nav { display:flex; flex-wrap:wrap; gap:.35rem; padding:.75rem 1rem; background:#243f35; }
+nav a { color:#e8efe9; text-decoration:none; font-size:.8rem; font-family:system-ui,sans-serif; padding:.35rem .55rem; border:1px solid rgba(255,255,255,.25); border-radius:4px; }
+main { max-width:720px; margin:0 auto; padding:1rem; }
+section { background:var(--card); border-radius:8px; padding:1rem 1.1rem; margin:0 0 1rem; box-shadow:0 1px 3px rgba(0,0,0,.06); }
+section h2 { margin:0 0 .75rem; font-size:1.15rem; color:var(--accent); border-bottom:2px solid #d4cfc4; padding-bottom:.35rem; }
+.muted { color:var(--muted); font-size:.9rem; }
+ul { padding-left:1.2rem; }
+.card-row { display:grid; gap:.75rem; }
+@media(min-width:560px){ .card-row { grid-template-columns:1fr 1fr 1fr; } }
+.card { background:var(--bg); padding:.75rem; border-radius:6px; }
+table { width:100%; border-collapse:collapse; font-size:.9rem; }
+td, th { border-bottom:1px solid #e5e0d6; padding:.4rem .25rem; text-align:left; }
+.cta { background:#eef3f0; border:1px dashed var(--accent); padding:.75rem; border-radius:6px; margin-top:.75rem; font-family:system-ui,sans-serif; font-size:.9rem; }
+footer { text-align:center; padding:1.5rem 1rem 2.5rem; font-family:system-ui,sans-serif; font-size:.8rem; color:var(--muted); }
+.badge { display:inline-block; background:#c45c26; color:#fff; font-family:system-ui,sans-serif; font-size:.7rem; padding:.2rem .45rem; border-radius:3px; margin-left:.35rem; vertical-align:middle; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Parafia św. Jana <span class="badge">DEMO</span></h1>
+  <p>Ogłoszenia · Msze · Kontakt — także na telefonie</p>
+</header>
+<nav>
+  <a href="#home">Główna</a>
+  <a href="#ogloszenia">Ogłoszenia</a>
+  <a href="#intencje">Intencje</a>
+  <a href="#sakramenty">Sakramenty</a>
+  <a href="#nabozenstwa">Nabożeństwa</a>
+  <a href="#o-parafii">O parafii</a>
+  <a href="#wspolnoty">Wspólnoty</a>
+  <a href="#kontakt">Kontakt</a>
+</nav>
+<main>
+<section id="home">
+  <h2>1. Strona główna</h2>
+  <p><strong>Witamy w Parafii św. Jana</strong></p>
+  <p class="muted">Najbliższe Msze w niedzielę: 8:00 · 10:30 · 18:00</p>
+  <ul>
+    <li>Rekolekcje — zapisy w kancelarii</li>
+    <li>Dyżur spowiedzi: piątek 16:00–18:00</li>
+    <li>Zbiórka żywności w niedzielę po Mszach</li>
+  </ul>
+</section>
+<section id="ogloszenia">
+  <h2>2. Ogłoszenia parafialne</h2>
+  <p><strong>Ogłoszenia z dnia 05.10.2026</strong></p>
+  <p class="muted">Dziękczynienie za dożynki. Spotkanie Rady Duszpasterskiej we wtorek o 19:00. Zachęcamy do modlitwy różańcowej w październiku.</p>
+</section>
+<section id="intencje">
+  <h2>3. Intencje mszalne</h2>
+  <table>
+    <tr><th>Dzień</th><th>Godz.</th><th>Intencja</th></tr>
+    <tr><td>Poniedziałek</td><td>7:00</td><td>Za śp. Annę K.</td></tr>
+    <tr><td>Wtorek</td><td>18:00</td><td>Dziękczynna — rodzina Nowaków</td></tr>
+    <tr><td>Środa</td><td>7:00</td><td>O zdrowie dla Jana</td></tr>
+  </table>
+  <div class="cta">Zgłoś intencję: tel. kancelarii (w demie — placeholder formularza).</div>
+</section>
+<section id="sakramenty">
+  <h2>4. Sakramenty</h2>
+  <p><strong>Chrzest</strong> — po uzgodnieniu z kancelarią; kurs dla rodziców i chrzestnych.</p>
+  <p><strong>Ślub</strong> — zgłoszenie min. 3 miesiące wcześniej.</p>
+  <p><strong>Pogrzeb</strong> — kontakt z kancelarią / dyżurującym księdzem.</p>
+</section>
+<section id="nabozenstwa">
+  <h2>5. Nabożeństwa / godziny</h2>
+  <p><strong>Msze św.</strong> Pn–Sob 7:00 i 18:00 · Nd 8:00, 10:30, 18:00</p>
+  <p><strong>Spowiedź</strong> 15 min przed Mszą oraz piątek 16:00–18:00</p>
+  <p class="muted">Różaniec: październik, pn–pt 17:30</p>
+</section>
+<section id="o-parafii">
+  <h2>6. O parafii</h2>
+  <p>Parafia św. Jana istnieje od 1924 (dane przykładowe). Kościół parafialny jest miejscem wspólnej modlitwy i spotkań wspólnot.</p>
+  <p class="muted">Proboszcz: ks. Jan Kowalski (demo)</p>
+</section>
+<section id="wspolnoty">
+  <h2>7. Wspólnoty / grupy</h2>
+  <div class="card-row">
+    <div class="card"><strong>Żywy Różaniec</strong><br/><span class="muted">I wtorek miesiąca</span></div>
+    <div class="card"><strong>Oaza</strong><br/><span class="muted">Piątek 19:00</span></div>
+    <div class="card"><strong>Schola</strong><br/><span class="muted">Czwartek 18:30</span></div>
+  </div>
+</section>
+<section id="kontakt">
+  <h2>8. Kontakt / kancelaria</h2>
+  <p>ul. Przykładowa 1, 00-000 Miasto<br/>tel. +48 000 000 000<br/>kancelaria@parafiaswjana-demo.pl</p>
+  <p class="muted">Dyżur: wt–pt 9:00–12:00 i 16:00–17:30</p>
+  <div class="cta"><strong>Oferta wdrożenia (Faza 0): 1990 zł netto</strong> — Wasze treści, mobile, hosting po stronie parafii. Opieka / WCAG = wariant premium osobno.</div>
+</section>
+</main>
+<footer>Demo szablonu strony parafii · nie jest stroną prawdziwej parafii · CTA 1990 zł netto</footer>
+</body>
+</html>
