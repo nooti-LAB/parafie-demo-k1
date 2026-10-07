@@ -1,106 +1,1065 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Parafia św. Jana — demo szablonu strony parafialnej K1. Ogłoszenia, intencje mszalne, sakramenty, nabożeństwa.">
 <title>Parafia św. Jana — demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root { --bg:#f7f4ef; --ink:#1a1a1a; --accent:#2c4a3e; --card:#fff; --muted:#5c5c5c; }
-* { box-sizing:border-box; }
-body { margin:0; font-family: Georgia, "Times New Roman", serif; background:var(--bg); color:var(--ink); line-height:1.5; }
-header { background:var(--accent); color:#fff; padding:1.25rem 1rem; }
-header h1 { margin:0 0 .25rem; font-size:1.4rem; font-weight:600; }
-header p { margin:0; opacity:.9; font-size:.95rem; }
-nav { display:flex; flex-wrap:wrap; gap:.35rem; padding:.75rem 1rem; background:#243f35; }
-nav a { color:#e8efe9; text-decoration:none; font-size:.8rem; font-family:system-ui,sans-serif; padding:.35rem .55rem; border:1px solid rgba(255,255,255,.25); border-radius:4px; }
-main { max-width:720px; margin:0 auto; padding:1rem; }
-section { background:var(--card); border-radius:8px; padding:1rem 1.1rem; margin:0 0 1rem; box-shadow:0 1px 3px rgba(0,0,0,.06); }
-section h2 { margin:0 0 .75rem; font-size:1.15rem; color:var(--accent); border-bottom:2px solid #d4cfc4; padding-bottom:.35rem; }
-.muted { color:var(--muted); font-size:.9rem; }
-ul { padding-left:1.2rem; }
-.card-row { display:grid; gap:.75rem; }
-@media(min-width:560px){ .card-row { grid-template-columns:1fr 1fr 1fr; } }
-.card { background:var(--bg); padding:.75rem; border-radius:6px; }
-table { width:100%; border-collapse:collapse; font-size:.9rem; }
-td, th { border-bottom:1px solid #e5e0d6; padding:.4rem .25rem; text-align:left; }
-.cta { background:#eef3f0; border:1px dashed var(--accent); padding:.75rem; border-radius:6px; margin-top:.75rem; font-family:system-ui,sans-serif; font-size:.9rem; }
-footer { text-align:center; padding:1.5rem 1rem 2.5rem; font-family:system-ui,sans-serif; font-size:.8rem; color:var(--muted); }
-.badge { display:inline-block; background:#c45c26; color:#fff; font-family:system-ui,sans-serif; font-size:.7rem; padding:.2rem .45rem; border-radius:3px; margin-left:.35rem; vertical-align:middle; }
+:root {
+  --bg: #faf9f7;
+  --bg-warm: #f5f3ef;
+  --ink: #1f1f1f;
+  --ink-soft: #4a4a4a;
+  --muted: #6b6b6b;
+  --accent: #1e3a5f;
+  --accent-light: #2c5282;
+  --accent-warm: #8b4513;
+  --gold: #b8860b;
+  --border: #e5e2dc;
+  --card: #ffffff;
+  --card-hover: #fdfcfb;
+  --success: #276749;
+  --serif: 'Lora', Georgia, 'Times New Roman', serif;
+  --sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.06);
+  --shadow-md: 0 2px 4px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-lg: 0 4px 6px rgba(0,0,0,0.05), 0 10px 24px rgba(0,0,0,0.1);
+  --radius: 8px;
+  --radius-lg: 12px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+
+body {
+  margin: 0;
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.65;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* === DEMO BADGE === */
+.demo-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  background: linear-gradient(135deg, #c45c26 0%, #a84820 100%);
+  color: #fff;
+  font-family: var(--sans);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.3em 0.6em;
+  border-radius: 4px;
+  margin-left: 0.5rem;
+  vertical-align: middle;
+  box-shadow: 0 1px 3px rgba(196, 92, 38, 0.3);
+}
+
+/* === HEADER === */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--accent);
+  box-shadow: var(--shadow-md);
+}
+
+.header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0.9rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.site-title {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.site-title::before {
+  content: "✝";
+  font-size: 1rem;
+  opacity: 0.7;
+  margin-right: 0.4rem;
+}
+
+/* === NAVIGATION === */
+.nav-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  line-height: 1;
+}
+
+.nav-toggle:focus {
+  outline: 2px solid rgba(255,255,255,0.5);
+  outline-offset: 2px;
+}
+
+.main-nav {
+  display: flex;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+}
+
+.main-nav a {
+  color: rgba(255,255,255,0.9);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.main-nav a:hover,
+.main-nav a:focus {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+}
+
+.main-nav a:focus {
+  outline: 2px solid rgba(255,255,255,0.5);
+  outline-offset: 2px;
+}
+
+@media (max-width: 768px) {
+  .nav-toggle { display: block; }
+  
+  .main-nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--accent);
+    padding: 0.5rem 1rem 1rem;
+    flex-direction: column;
+    gap: 0;
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .main-nav.is-open { display: flex; }
+  
+  .main-nav a {
+    padding: 0.75rem 1rem;
+    border-radius: 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  
+  .main-nav a:last-child { border-bottom: none; }
+}
+
+/* === HERO === */
+.hero {
+  background: linear-gradient(135deg, var(--accent) 0%, #0f2744 100%);
+  color: #fff;
+  padding: 3rem 1rem 3.5rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5v50M5 30h50' stroke='%23fff' stroke-width='0.5' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.hero-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  opacity: 0.85;
+}
+
+.hero h1 {
+  font-family: var(--serif);
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  font-weight: 600;
+  margin: 0 0 0.75rem;
+  line-height: 1.2;
+}
+
+.hero-subtitle {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  margin: 0 0 1.5rem;
+  line-height: 1.5;
+}
+
+.hero-masses {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  background: rgba(255,255,255,0.1);
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius);
+  font-size: 0.95rem;
+}
+
+.hero-masses strong {
+  color: var(--gold);
+}
+
+/* === MAIN CONTENT === */
+main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem 3rem;
+}
+
+/* === SECTIONS === */
+.section {
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+}
+
+.section-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--bg-warm);
+}
+
+.section-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.section-title {
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.section-subtitle {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin: 0.25rem 0 0;
+}
+
+/* === ANNOUNCEMENTS === */
+.announcement-date {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  margin-bottom: 1rem;
+}
+
+.announcement-content {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--ink-soft);
+}
+
+/* === QUICK INFO LIST === */
+.quick-info {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.quick-info li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: var(--bg-warm);
+  border-radius: var(--radius);
+  font-size: 0.95rem;
+}
+
+.quick-info-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+/* === TABLE (Intencje) === */
+.intentions-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.intentions-table thead {
+  background: var(--bg-warm);
+}
+
+.intentions-table th {
+  font-weight: 600;
+  text-align: left;
+  padding: 0.75rem;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--ink-soft);
+  border-bottom: 2px solid var(--border);
+}
+
+.intentions-table td {
+  padding: 0.85rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.intentions-table tbody tr:hover {
+  background: var(--bg-warm);
+}
+
+.intentions-table .day {
+  font-weight: 600;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.intentions-table .time {
+  font-family: var(--sans);
+  font-weight: 500;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+.intentions-table .intention {
+  font-family: var(--serif);
+  font-style: italic;
+}
+
+@media (max-width: 500px) {
+  .intentions-table { font-size: 0.9rem; }
+  .intentions-table th,
+  .intentions-table td { padding: 0.6rem 0.5rem; }
+}
+
+/* === INFO BOX === */
+.info-box {
+  background: linear-gradient(135deg, var(--bg-warm) 0%, #f0ece4 100%);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--gold);
+  padding: 1rem 1.25rem;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  margin-top: 1.25rem;
+  font-size: 0.95rem;
+}
+
+.info-box-title {
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 0.25rem;
+}
+
+/* === SACRAMENTS GRID === */
+.sacraments-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.sacrament-item {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--bg-warm);
+  border-radius: var(--radius);
+  transition: box-shadow 0.2s;
+}
+
+.sacrament-item:hover {
+  box-shadow: var(--shadow-sm);
+}
+
+.sacrament-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.sacrament-name {
+  font-family: var(--serif);
+  font-weight: 600;
+  color: var(--accent);
+  margin: 0 0 0.25rem;
+  font-size: 1.05rem;
+}
+
+.sacrament-desc {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* === SCHEDULE === */
+.schedule-block {
+  margin-bottom: 1.25rem;
+}
+
+.schedule-block:last-child { margin-bottom: 0; }
+
+.schedule-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.schedule-label-icon { font-size: 1.1rem; }
+
+.schedule-times {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.schedule-time {
+  background: var(--bg-warm);
+  padding: 0.4rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.schedule-time.highlight {
+  background: var(--accent);
+  color: #fff;
+}
+
+.schedule-note {
+  font-size: 0.9rem;
+  color: var(--muted);
+  font-style: italic;
+  margin-top: 0.5rem;
+}
+
+/* === ABOUT SECTION === */
+.about-content {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: var(--ink-soft);
+}
+
+.pastor-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.25rem;
+  padding: 1rem;
+  background: var(--bg-warm);
+  border-radius: var(--radius);
+}
+
+.pastor-avatar {
+  width: 50px;
+  height: 50px;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.pastor-name {
+  font-weight: 600;
+  color: var(--accent);
+  margin: 0;
+}
+
+.pastor-role {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* === COMMUNITIES CARDS === */
+.communities-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 560px) {
+  .communities-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.community-card {
+  background: var(--bg-warm);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid transparent;
+}
+
+.community-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--border);
+}
+
+.community-icon {
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.community-name {
+  font-family: var(--serif);
+  font-weight: 600;
+  color: var(--accent);
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+}
+
+.community-time {
+  font-size: 0.85rem;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+}
+
+/* === CONTACT === */
+.contact-grid {
+  display: grid;
+  gap: 1.25rem;
+}
+
+@media (min-width: 560px) {
+  .contact-grid { grid-template-columns: 1fr 1fr; }
+}
+
+.contact-item {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.contact-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.contact-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  margin-bottom: 0.15rem;
+}
+
+.contact-value {
+  font-weight: 500;
+  color: var(--ink);
+  font-size: 0.95rem;
+}
+
+.contact-value a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.contact-value a:hover { text-decoration: underline; }
+
+/* === CTA BOX === */
+.cta-box {
+  background: linear-gradient(135deg, #1e3a5f 0%, #0f2744 100%);
+  color: #fff;
+  padding: 1.5rem;
+  border-radius: var(--radius-lg);
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.cta-box-title {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 0 0 0.75rem;
+}
+
+.cta-price {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin: 0.5rem 0;
+}
+
+.cta-desc {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.cta-note {
+  font-size: 0.8rem;
+  opacity: 0.7;
+  margin-top: 0.75rem;
+}
+
+/* === FOOTER === */
+.site-footer {
+  background: var(--accent);
+  color: rgba(255,255,255,0.85);
+  text-align: center;
+  padding: 2rem 1rem;
+  font-size: 0.9rem;
+}
+
+.footer-demo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.footer-note {
+  opacity: 0.7;
+  font-size: 0.85rem;
+}
+
+.footer-price {
+  margin-top: 0.5rem;
+  font-weight: 600;
+  color: var(--gold);
+}
+
+/* === UTILITIES === */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* === FOCUS STATES === */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* === PRINT === */
+@media print {
+  .site-header { position: static; }
+  .nav-toggle, .main-nav { display: none !important; }
+  .hero { padding: 1.5rem 1rem; }
+  .section { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+  .cta-box { background: #f5f5f5 !important; color: #000 !important; }
+  .cta-price { color: #000 !important; }
+}
 </style>
 </head>
 <body>
-<header>
-  <h1>Parafia św. Jana <span class="badge">DEMO</span></h1>
-  <p>Ogłoszenia · Msze · Kontakt — także na telefonie</p>
+
+<!-- HEADER & NAV -->
+<header class="site-header">
+  <div class="header-inner">
+    <h1 class="site-title">
+      Parafia św. Jana
+      <span class="demo-badge">DEMO</span>
+    </h1>
+    <button class="nav-toggle" aria-label="Menu nawigacyjne" aria-expanded="false" aria-controls="main-nav">
+      ☰
+    </button>
+    <nav id="main-nav" class="main-nav" aria-label="Nawigacja główna">
+      <a href="#home">Główna</a>
+      <a href="#ogloszenia">Ogłoszenia</a>
+      <a href="#intencje">Intencje</a>
+      <a href="#sakramenty">Sakramenty</a>
+      <a href="#nabozenstwa">Nabożeństwa</a>
+      <a href="#o-parafii">O parafii</a>
+      <a href="#wspolnoty">Wspólnoty</a>
+      <a href="#kontakt">Kontakt</a>
+    </nav>
+  </div>
 </header>
-<nav>
-  <a href="#home">Główna</a>
-  <a href="#ogloszenia">Ogłoszenia</a>
-  <a href="#intencje">Intencje</a>
-  <a href="#sakramenty">Sakramenty</a>
-  <a href="#nabozenstwa">Nabożeństwa</a>
-  <a href="#o-parafii">O parafii</a>
-  <a href="#wspolnoty">Wspólnoty</a>
-  <a href="#kontakt">Kontakt</a>
-</nav>
-<main>
-<section id="home">
-  <h2>1. Strona główna</h2>
-  <p><strong>Witamy w Parafii św. Jana</strong></p>
-  <p class="muted">Najbliższe Msze w niedzielę: 8:00 · 10:30 · 18:00</p>
-  <ul>
-    <li>Rekolekcje — zapisy w kancelarii</li>
-    <li>Dyżur spowiedzi: piątek 16:00–18:00</li>
-    <li>Zbiórka żywności w niedzielę po Mszach</li>
-  </ul>
-</section>
-<section id="ogloszenia">
-  <h2>2. Ogłoszenia parafialne</h2>
-  <p><strong>Ogłoszenia z dnia 05.10.2026</strong></p>
-  <p class="muted">Dziękczynienie za dożynki. Spotkanie Rady Duszpasterskiej we wtorek o 19:00. Zachęcamy do modlitwy różańcowej w październiku.</p>
-</section>
-<section id="intencje">
-  <h2>3. Intencje mszalne</h2>
-  <table>
-    <tr><th>Dzień</th><th>Godz.</th><th>Intencja</th></tr>
-    <tr><td>Poniedziałek</td><td>7:00</td><td>Za śp. Annę K.</td></tr>
-    <tr><td>Wtorek</td><td>18:00</td><td>Dziękczynna — rodzina Nowaków</td></tr>
-    <tr><td>Środa</td><td>7:00</td><td>O zdrowie dla Jana</td></tr>
-  </table>
-  <div class="cta">Zgłoś intencję: tel. kancelarii (w demie — placeholder formularza).</div>
-</section>
-<section id="sakramenty">
-  <h2>4. Sakramenty</h2>
-  <p><strong>Chrzest</strong> — po uzgodnieniu z kancelarią; kurs dla rodziców i chrzestnych.</p>
-  <p><strong>Ślub</strong> — zgłoszenie min. 3 miesiące wcześniej.</p>
-  <p><strong>Pogrzeb</strong> — kontakt z kancelarią / dyżurującym księdzem.</p>
-</section>
-<section id="nabozenstwa">
-  <h2>5. Nabożeństwa / godziny</h2>
-  <p><strong>Msze św.</strong> Pn–Sob 7:00 i 18:00 · Nd 8:00, 10:30, 18:00</p>
-  <p><strong>Spowiedź</strong> 15 min przed Mszą oraz piątek 16:00–18:00</p>
-  <p class="muted">Różaniec: październik, pn–pt 17:30</p>
-</section>
-<section id="o-parafii">
-  <h2>6. O parafii</h2>
-  <p>Parafia św. Jana istnieje od 1924 (dane przykładowe). Kościół parafialny jest miejscem wspólnej modlitwy i spotkań wspólnot.</p>
-  <p class="muted">Proboszcz: ks. Jan Kowalski (demo)</p>
-</section>
-<section id="wspolnoty">
-  <h2>7. Wspólnoty / grupy</h2>
-  <div class="card-row">
-    <div class="card"><strong>Żywy Różaniec</strong><br/><span class="muted">I wtorek miesiąca</span></div>
-    <div class="card"><strong>Oaza</strong><br/><span class="muted">Piątek 19:00</span></div>
-    <div class="card"><strong>Schola</strong><br/><span class="muted">Czwartek 18:30</span></div>
+
+<!-- HERO -->
+<section id="home" class="hero">
+  <div class="hero-content">
+    <div class="hero-icon">⛪</div>
+    <h1>Witamy w Parafii św. Jana</h1>
+    <p class="hero-subtitle">Wspólnota wiary, modlitwy i wzajemnej pomocy.<br>Zapraszamy na Msze święte i do udziału w życiu parafii.</p>
+    <div class="hero-masses">
+      <span><strong>Niedziela:</strong> 8:00 · 10:30 · 18:00</span>
+    </div>
   </div>
 </section>
-<section id="kontakt">
-  <h2>8. Kontakt / kancelaria</h2>
-  <p>ul. Przykładowa 1, 00-000 Miasto<br/>tel. +48 000 000 000<br/>kancelaria@parafiaswjana-demo.pl</p>
-  <p class="muted">Dyżur: wt–pt 9:00–12:00 i 16:00–17:30</p>
-  <div class="cta"><strong>Oferta wdrożenia (Faza 0): 1990 zł netto</strong> — Wasze treści, mobile, hosting po stronie parafii. Opieka / WCAG = wariant premium osobno.</div>
+
+<main>
+
+<!-- OGŁOSZENIA -->
+<section id="ogloszenia" class="section">
+  <header class="section-header">
+    <span class="section-icon">📢</span>
+    <div>
+      <h2 class="section-title">Ogłoszenia parafialne</h2>
+      <p class="section-subtitle">Bieżące informacje z życia parafii</p>
+    </div>
+  </header>
+  <span class="announcement-date">5 października 2026</span>
+  <div class="announcement-content">
+    <p>Dziękczynienie za tegoroczne dożynki — dziękujemy wszystkim, którzy przyczynili się do przygotowania uroczystości.</p>
+    <p>Spotkanie Rady Duszpasterskiej odbędzie się we <strong>wtorek o godz. 19:00</strong> w salce parafialnej.</p>
+    <p>Zachęcamy do udziału w modlitwie różańcowej w październiku — codziennie o 17:30.</p>
+  </div>
 </section>
+
+<!-- AKTUALNOŚCI (część strony głównej) -->
+<section class="section">
+  <header class="section-header">
+    <span class="section-icon">📌</span>
+    <div>
+      <h2 class="section-title">Aktualności</h2>
+      <p class="section-subtitle">Co nowego w parafii</p>
+    </div>
+  </header>
+  <ul class="quick-info">
+    <li>
+      <span class="quick-info-icon">🙏</span>
+      <div><strong>Rekolekcje wielkopostne</strong> — zapisy w kancelarii parafialnej</div>
+    </li>
+    <li>
+      <span class="quick-info-icon">✝️</span>
+      <div><strong>Dyżur spowiedzi</strong> — piątek 16:00–18:00</div>
+    </li>
+    <li>
+      <span class="quick-info-icon">🤝</span>
+      <div><strong>Zbiórka żywności</strong> — w niedzielę po wszystkich Mszach św.</div>
+    </li>
+  </ul>
+</section>
+
+<!-- INTENCJE -->
+<section id="intencje" class="section">
+  <header class="section-header">
+    <span class="section-icon">📖</span>
+    <div>
+      <h2 class="section-title">Intencje mszalne</h2>
+      <p class="section-subtitle">Najbliższy tydzień</p>
+    </div>
+  </header>
+  <table class="intentions-table">
+    <thead>
+      <tr>
+        <th scope="col">Dzień</th>
+        <th scope="col">Godz.</th>
+        <th scope="col">Intencja</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="day">Poniedziałek</td>
+        <td class="time">7:00</td>
+        <td class="intention">Za śp. Annę K.</td>
+      </tr>
+      <tr>
+        <td class="day">Wtorek</td>
+        <td class="time">18:00</td>
+        <td class="intention">Dziękczynna — rodzina Nowaków</td>
+      </tr>
+      <tr>
+        <td class="day">Środa</td>
+        <td class="time">7:00</td>
+        <td class="intention">O zdrowie dla Jana</td>
+      </tr>
+      <tr>
+        <td class="day">Czwartek</td>
+        <td class="time">18:00</td>
+        <td class="intention">Za dusze w czyśćcu cierpiące</td>
+      </tr>
+      <tr>
+        <td class="day">Piątek</td>
+        <td class="time">7:00</td>
+        <td class="intention">W intencji Ojca Świętego</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="info-box">
+    <p class="info-box-title">Zgłaszanie intencji</p>
+    <p>Intencje mszalne można zgłaszać w kancelarii parafialnej lub telefonicznie. W wersji demo — placeholder formularza.</p>
+  </div>
+</section>
+
+<!-- SAKRAMENTY -->
+<section id="sakramenty" class="section">
+  <header class="section-header">
+    <span class="section-icon">✝️</span>
+    <div>
+      <h2 class="section-title">Sakramenty</h2>
+      <p class="section-subtitle">Informacje i wymagane dokumenty</p>
+    </div>
+  </header>
+  <div class="sacraments-grid">
+    <article class="sacrament-item">
+      <span class="sacrament-icon">💧</span>
+      <div>
+        <h3 class="sacrament-name">Chrzest</h3>
+        <p class="sacrament-desc">Termin po uzgodnieniu z kancelarią. Wymagany kurs dla rodziców i chrzestnych — sobota przed chrztem, godz. 10:00.</p>
+      </div>
+    </article>
+    <article class="sacrament-item">
+      <span class="sacrament-icon">💍</span>
+      <div>
+        <h3 class="sacrament-name">Małżeństwo</h3>
+        <p class="sacrament-desc">Zgłoszenie minimum 3 miesiące przed planowaną datą. Nauki przedmałżeńskie w Poradni Rodzinnej.</p>
+      </div>
+    </article>
+    <article class="sacrament-item">
+      <span class="sacrament-icon">🕯️</span>
+      <div>
+        <h3 class="sacrament-name">Pogrzeb</h3>
+        <p class="sacrament-desc">Kontakt z kancelarią lub dyżurującym księdzem. Wymagany akt zgonu.</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- NABOŻEŃSTWA -->
+<section id="nabozenstwa" class="section">
+  <header class="section-header">
+    <span class="section-icon">🕐</span>
+    <div>
+      <h2 class="section-title">Nabożeństwa i godziny</h2>
+      <p class="section-subtitle">Porządek Mszy św. i nabożeństw</p>
+    </div>
+  </header>
+  
+  <div class="schedule-block">
+    <div class="schedule-label">
+      <span class="schedule-label-icon">⛪</span>
+      Msze święte
+    </div>
+    <div class="schedule-times">
+      <span class="schedule-time">Pn–Sob: 7:00</span>
+      <span class="schedule-time">Pn–Sob: 18:00</span>
+      <span class="schedule-time highlight">Nd: 8:00</span>
+      <span class="schedule-time highlight">Nd: 10:30</span>
+      <span class="schedule-time highlight">Nd: 18:00</span>
+    </div>
+  </div>
+  
+  <div class="schedule-block">
+    <div class="schedule-label">
+      <span class="schedule-label-icon">✝️</span>
+      Spowiedź
+    </div>
+    <div class="schedule-times">
+      <span class="schedule-time">15 min przed każdą Mszą</span>
+      <span class="schedule-time">Pt: 16:00–18:00</span>
+    </div>
+  </div>
+  
+  <div class="schedule-block">
+    <div class="schedule-label">
+      <span class="schedule-label-icon">📿</span>
+      Różaniec
+    </div>
+    <p class="schedule-note">Październik: codziennie o 17:30 (Pn–Pt)</p>
+  </div>
+</section>
+
+<!-- O PARAFII -->
+<section id="o-parafii" class="section">
+  <header class="section-header">
+    <span class="section-icon">🏛️</span>
+    <div>
+      <h2 class="section-title">O parafii</h2>
+      <p class="section-subtitle">Historia i informacje</p>
+    </div>
+  </header>
+  <div class="about-content">
+    <p>Parafia św. Jana istnieje od 1924 roku (dane przykładowe). Nasz kościół parafialny jest miejscem wspólnej modlitwy, celebracji sakramentów i spotkań wspólnot.</p>
+    <p>Zapraszamy wszystkich — zarówno stałych parafian, jak i gości — do uczestnictwa w życiu naszej wspólnoty.</p>
+  </div>
+  <div class="pastor-info">
+    <div class="pastor-avatar">👨‍⬛</div>
+    <div>
+      <p class="pastor-name">ks. Jan Kowalski</p>
+      <p class="pastor-role">Proboszcz (dane demo)</p>
+    </div>
+  </div>
+</section>
+
+<!-- WSPÓLNOTY -->
+<section id="wspolnoty" class="section">
+  <header class="section-header">
+    <span class="section-icon">👥</span>
+    <div>
+      <h2 class="section-title">Wspólnoty i grupy</h2>
+      <p class="section-subtitle">Dołącz do nas</p>
+    </div>
+  </header>
+  <div class="communities-grid">
+    <article class="community-card">
+      <div class="community-icon">📿</div>
+      <h3 class="community-name">Żywy Różaniec</h3>
+      <p class="community-time">🗓️ I wtorek miesiąca</p>
+    </article>
+    <article class="community-card">
+      <div class="community-icon">🔥</div>
+      <h3 class="community-name">Oaza</h3>
+      <p class="community-time">🗓️ Piątek 19:00</p>
+    </article>
+    <article class="community-card">
+      <div class="community-icon">🎵</div>
+      <h3 class="community-name">Schola</h3>
+      <p class="community-time">🗓️ Czwartek 18:30</p>
+    </article>
+  </div>
+</section>
+
+<!-- KONTAKT -->
+<section id="kontakt" class="section">
+  <header class="section-header">
+    <span class="section-icon">📍</span>
+    <div>
+      <h2 class="section-title">Kontakt</h2>
+      <p class="section-subtitle">Kancelaria parafialna</p>
+    </div>
+  </header>
+  <div class="contact-grid">
+    <div class="contact-item">
+      <div class="contact-icon">📍</div>
+      <div>
+        <p class="contact-label">Adres</p>
+        <p class="contact-value">ul. Przykładowa 1<br>00-000 Miasto</p>
+      </div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-icon">📞</div>
+      <div>
+        <p class="contact-label">Telefon</p>
+        <p class="contact-value"><a href="tel:+48000000000">+48 000 000 000</a></p>
+      </div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-icon">✉️</div>
+      <div>
+        <p class="contact-label">E-mail</p>
+        <p class="contact-value"><a href="mailto:kancelaria@parafiaswjana-demo.pl">kancelaria@parafiaswjana-demo.pl</a></p>
+      </div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-icon">🕐</div>
+      <div>
+        <p class="contact-label">Godziny otwarcia</p>
+        <p class="contact-value">Wt–Pt: 9:00–12:00<br>Wt–Pt: 16:00–17:30</p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- CTA -->
+  <div class="cta-box">
+    <p class="cta-box-title">Oferta wdrożenia szablonu K1</p>
+    <p class="cta-price">1990 zł netto</p>
+    <p class="cta-desc">Kompletna strona parafii: Wasze treści, responsywny design, hosting po stronie parafii.</p>
+    <p class="cta-note">Opieka techniczna / WCAG = wariant premium osobno wyceniany.</p>
+  </div>
+</section>
+
 </main>
-<footer>Demo szablonu strony parafii · nie jest stroną prawdziwej parafii · CTA 1990 zł netto</footer>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-demo">
+    <span class="demo-badge">DEMO</span>
+    <span>Szablon strony parafii K1</span>
+  </div>
+  <p class="footer-note">To jest strona demonstracyjna — nie jest stroną prawdziwej parafii.</p>
+  <p class="footer-price">Wdrożenie: 1990 zł netto</p>
+</footer>
+
+<script>
+(function() {
+  const toggle = document.querySelector('.nav-toggle');
+  const nav = document.querySelector('.main-nav');
+  
+  if (toggle && nav) {
+    toggle.addEventListener('click', function() {
+      const isOpen = nav.classList.toggle('is-open');
+      toggle.setAttribute('aria-expanded', isOpen);
+      toggle.textContent = isOpen ? '✕' : '☰';
+    });
+    
+    nav.querySelectorAll('a').forEach(function(link) {
+      link.addEventListener('click', function() {
+        nav.classList.remove('is-open');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.textContent = '☰';
+      });
+    });
+  }
+})();
+</script>
+
 </body>
 </html>
