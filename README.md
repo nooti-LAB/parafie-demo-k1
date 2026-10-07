@@ -1,1 +1,1 @@
-# parafie-demo-k1
+# Parafia Demo K1
